@@ -46,3 +46,5 @@ zipper' list1 list2 = rev(aux list1 list2 [])
         aux (x:xs) (y:ys) res = aux (xs) (ys)  ((x,y):res)
 
 
+--challenge
+fibs = 1 : 1 : zipWith (+) (tail(fibs))  fibs
