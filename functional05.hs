@@ -17,9 +17,9 @@ list_map' f (x:xs) = f(x) : list_map' f (xs)
 
 --list mapping tail recursion
 list_map'' :: (t -> a) -> [t] -> [a]
-list_map'' f l = aux f l []
+list_map'' f l = rev(aux f l [])
     where   
-        aux f [] res = rev(res)
+        aux f [] res = res
         aux f (x:xs) res = aux f xs (f(x):res) 
 --wirte three more test cases for list_map''
 --  case 1
@@ -39,31 +39,10 @@ zipper _ [] = []
 zipper (x:xs) (y:ys) = (x,y) : zipper xs ys
 --zipper tail recursion
 zipper' :: [a] -> [b] -> [(a, b)]
-zipper' list1 list2 = aux list1 list2 []
+zipper' list1 list2 = rev(aux list1 list2 [])
     where
-        aux [] _ res = rev(res)
-        aux _ [] res = rev(res)
+        aux [] _ res = res
+        aux _ [] res = res
         aux (x:xs) (y:ys) res = aux (xs) (ys)  ((x,y):res)
 
 
---fac
-fac :: Integral p => p -> p
-fac n
-    | n >= 0  = aux n 1
-    | otherwise = error "negative number"
-    where
-        aux 0 res = res
-        aux n res = aux (n-1) (res*n)
-
-facs = 1 : zipWith (*) [1..] facs
-
---challenge 
---fib
-fib :: Integral p => p -> p
-fib n = aux 0 0 1
-    where  
-        aux i res res'
-            | i == n    = res
-            | otherwise = aux (i+1) res' (res+res')
--- mistake !!
-fibs = 1 : zipWith (+) ([fib(0)..])  fibs
